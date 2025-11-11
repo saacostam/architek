@@ -1,6 +1,11 @@
+import { Theme } from "@radix-ui/themes"
+import { AdaptersProvider } from "@/shared/adapters/core/ui"
+
 function App() {
   return (
-    <>App</>
+    <Theme accentColor="green" grayColor="olive">
+      <AdaptersProvider/>
+    </Theme>
   )
 }
 
