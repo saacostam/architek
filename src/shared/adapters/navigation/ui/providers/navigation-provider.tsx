@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { Outlet, Route, Routes } from "react-router";
 import { useAdapters } from "@/shared/adapters/core/app";
-import { LazyLoadingRouteSkeleton } from "../components";
 import { ErrorScreen } from "@/shared/adapters/errors/ui";
 import { CoursesScreen } from "@/features/courses/core/ui";
+import { AppLayout } from "@/features/layouts/ui";
+import { LazyLoadingRouteSkeleton } from "../components";
 import { RouteName } from "../../domain";
 
 // Lazy imports
@@ -21,9 +22,9 @@ export function NavigationProvider() {
 			<Routes>
 				<Route
 					element={
-						// <AppLayout>
+						<AppLayout>
 							<Outlet />
-						// </AppLayout>
+						</AppLayout>
 					}
 				>
 					<Route index element={<CoursesScreen />} />
