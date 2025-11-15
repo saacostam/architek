@@ -15,7 +15,7 @@ export function Navbar() {
         )
     }, [themeAdapter]);
 
-    return <div style={{ backgroundColor: "var(--gray-1)", borderBottom: "1px solid var(--accent-6)" }}>
+    return <div style={{ backgroundColor: "var(--accent-1)", borderBottom: "1px solid var(--gray-6)" }}>
         <Flex p="4" justify="between">
             <Link className="clean-link" to={navigationAdapter.generateRoute({ name: RouteName.HOME })}>
                 <Logo />
