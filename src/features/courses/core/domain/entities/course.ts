@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 export interface ICourse {
-    id: string;
+  id: string;
   title: string;
   logoUrl: string;
   description: string;

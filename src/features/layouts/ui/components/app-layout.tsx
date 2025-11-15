@@ -7,7 +7,7 @@ export function AppLayout({
 }: PropsWithChildren) {
     return <Flex direction="column" gap="4">
         <Navbar />
-        <Container>
+        <Container px="4">
             {children}
         </Container>
     </Flex>
