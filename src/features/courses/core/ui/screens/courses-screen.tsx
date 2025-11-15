@@ -1,9 +1,10 @@
-import { Flex, Heading } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { AllCourses } from "../components";
+import { Header } from "@/shared/components/header";
 
 export function CoursesScreen() {
     return <Flex direction="column" gap="4">
-        <Heading>Courses</Heading>
+        <Header>Courses</Header>
         <AllCourses />
     </Flex>
 }

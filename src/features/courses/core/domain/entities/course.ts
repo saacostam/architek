@@ -4,13 +4,8 @@ export interface ICourse {
     id: string;
   title: string;
   logoUrl: string;
-  description: ICourseDescription;
+  description: string;
   chapters: IChapter[];
-}
-
-export interface ICourseDescription {
-  title: string;
-  paragraphs: string[];
 }
 
 export interface IChapter {

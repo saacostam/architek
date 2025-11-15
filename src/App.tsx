@@ -3,7 +3,7 @@ import { AdaptersProvider } from "@/shared/adapters/core/ui"
 
 function App() {
   return (
-    <Theme accentColor="indigo" grayColor="olive">
+    <Theme accentColor="indigo" grayColor="slate">
       <AdaptersProvider/>
     </Theme>
   )
