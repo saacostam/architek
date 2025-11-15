@@ -6,9 +6,9 @@ import { useCourses } from "../../../app";
 export function AllCourses() {
     const { courses, getHrefToCourse } = useCourses();
 
-    return <Flex direction="row" gap="4">
-        {courses.map(course => <Link className="clean-link" to={getHrefToCourse(course)}>
-            <Card key={course.id} size="3">
+    return <Flex direction="column" gap="4">
+        {courses.map(course => <Link className="clean-link" to={getHrefToCourse(course)} key={course.id}>
+            <Card size="3">
                 <Flex direction={{ initial: "column", xs: "row" }} gap="6">
                     <img src={course.logoUrl} height="96px" width="96px"/>
                     <div>

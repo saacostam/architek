@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 export interface ICourse {
   id: string;
+  available: boolean;
   title: string;
   logoUrl: string;
   description: string;

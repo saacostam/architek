@@ -2,9 +2,10 @@ import type { ICourse } from "@/features/courses/core/domain";
 
 export const LOAD_BALANCER_COURSE: ICourse = {
   id: "load-balancers",
+  available: true,
   title: "Load Balancers",
   logoUrl: "/load-balancer.png",
-  description: "Explore the fundamentals of Load Balancers in Cloud Computing, understanding their role in distributing traffic efficiently across servers to optimize performance and ensure high availability. Understanding load balancers is crucial for anyone involved in designing, developing, or maintaining scalable and high-performance web applications. Below is a curriculum that covers the fundamental concepts, types, and best practices related to load balancers:",
+  description: "Explore the fundamentals of Load Balancers in Cloud Computing, understanding their role in distributing traffic efficiently across servers to optimize performance and ensure high availability.",
   chapters: [
     {
       title: "Introduction to Load Balancers",

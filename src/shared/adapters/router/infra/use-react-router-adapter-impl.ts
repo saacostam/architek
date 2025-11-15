@@ -5,7 +5,6 @@ import type { IRouterAdapter } from "../domain";
 export function useReactRouterAdapterImpl(): IRouterAdapter {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const params = useParams();
 
 	const getBaseUrl = useCallback((): string => {
 		return window.location.origin;
@@ -14,10 +13,6 @@ export function useReactRouterAdapterImpl(): IRouterAdapter {
 	const getPathname = useCallback((): string => {
 		return location.pathname;
 	}, [location.pathname]);
-
-	const getParams = useCallback((): Record<string, string | undefined> => {
-		return params;
-	}, [params]);
 
 	const getUrlSearchParams = useCallback((): URLSearchParams => {
 		return new URLSearchParams(window.location.search);
@@ -39,7 +34,7 @@ export function useReactRouterAdapterImpl(): IRouterAdapter {
 		() => ({
 			getBaseUrl,
 			getPathname,
-			getParams,
+			useParams,
 			getUrlSearchParams,
 			push,
 			replace,
@@ -48,7 +43,6 @@ export function useReactRouterAdapterImpl(): IRouterAdapter {
 		[
 			getBaseUrl,
 			getPathname,
-			getParams,
 			getUrlSearchParams,
 			push,
 			replace,
