@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "biome format --write ./src",
+    "lint": "biome lint ./src",
+    "cc": "biome check --fix ./src"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.2.1",
@@ -16,7 +18,7 @@
     "react-router": "^7.9.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@biomejs/biome": "2.3.5",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
