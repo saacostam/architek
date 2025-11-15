@@ -2,11 +2,12 @@ import { Flex } from "@radix-ui/themes";
 import { GenericScreenSkeleton } from "@/features/layouts/ui";
 import { useAdapters } from "@/shared/adapters/core/app";
 import { useCourses } from "../../app";
+import { COURSES } from "../../domain";
 import { CourseChapters } from "../components";
 
 export function CourseByIdScreen() {
 	const { routerAdapter } = useAdapters();
-	const { courses } = useCourses();
+	const { courses } = useCourses({ courses: COURSES });
 
 	const { id } = routerAdapter.useParams();
 	const course = courses.find((c) => c.id === id);
