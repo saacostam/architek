@@ -1,10 +1,8 @@
 import { Flex } from "@radix-ui/themes";
 import { Header } from "@/shared/components/header";
-import { AllCourses } from "../components";
 
-export function CoursesScreen() {
+export function CourseByIdScreen() {
     return <Flex direction="column" gap="4">
-        <Header>Courses</Header>
-        <AllCourses />
+        <Header>Course By Id</Header>
     </Flex>
 }

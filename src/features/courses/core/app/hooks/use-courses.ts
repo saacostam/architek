@@ -8,7 +8,7 @@ export function useCourses() {
 
     const courses = COURSES;
 
-    const getHrefToCourse = useCallback((_course: ICourse) => navigationAdapter.generateRoute({ name: RouteName.HOME }), [navigationAdapter])
+    const getHrefToCourse = useCallback((course: ICourse) => navigationAdapter.generateRoute({ name: RouteName.COURSE_BY_ID, payload: { id: course.id } }), [navigationAdapter])
 
     return useMemo(() => ({
         courses,

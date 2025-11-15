@@ -7,6 +7,9 @@ import {
 export class NavigationAdapter implements INavigationAdapter {
 	defineRoute(name: RouteName): string {
 		switch (name) {
+			case RouteName.COURSE_BY_ID: {
+				return "/:id";
+			}
 			case RouteName.HOME: {
 				return "/";
 			}
@@ -15,6 +18,9 @@ export class NavigationAdapter implements INavigationAdapter {
 
 	generateRoute(action: GenerateRouteAction): string {
 		switch (action.name) {
+			case RouteName.COURSE_BY_ID: {
+				return `/${action.payload.id}`;
+			}
 			case RouteName.HOME: {
 				return "/";
 			}

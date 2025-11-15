@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Outlet, Route, Routes } from "react-router";
 import { useAdapters } from "@/shared/adapters/core/app";
 import { ErrorScreen } from "@/shared/adapters/errors/ui";
-import { CoursesScreen } from "@/features/courses/core/ui";
+import { CourseByIdScreen, CoursesScreen } from "@/features/courses/core/ui";
 import { AppLayout } from "@/features/layouts/ui";
 import { LazyLoadingRouteSkeleton } from "../components";
 import { RouteName } from "../../domain";
@@ -28,10 +28,10 @@ export function NavigationProvider() {
 					}
 				>
 					<Route index element={<CoursesScreen />} />
-					{/* <Route
-						path={navigationAdapter.defineRoute(RouteName.DASHBOARD)}
-						element={<DashboardScreen />}
-					/> */}
+					<Route
+						path={navigationAdapter.defineRoute(RouteName.COURSE_BY_ID)}
+						element={<CourseByIdScreen />}
+					/>
 				</Route>
 				<Route
 					path="*"
