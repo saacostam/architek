@@ -1,4 +1,11 @@
-import { Card, Container, Flex, Heading, Link as RadixLink, Text } from "@radix-ui/themes";
+import {
+	Card,
+	Container,
+	Flex,
+	Heading,
+	Link as RadixLink,
+	Text,
+} from "@radix-ui/themes";
 import { Link } from "react-router";
 
 export interface ErrorScreenProps {

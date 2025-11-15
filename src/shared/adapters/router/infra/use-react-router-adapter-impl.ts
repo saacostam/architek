@@ -18,13 +18,19 @@ export function useReactRouterAdapterImpl(): IRouterAdapter {
 		return new URLSearchParams(window.location.search);
 	}, []);
 
-	const push = useCallback(async (route: string): Promise<void> => {
-		navigate(route);
-	}, [navigate]);
+	const push = useCallback(
+		async (route: string): Promise<void> => {
+			navigate(route);
+		},
+		[navigate],
+	);
 
-	const replace = useCallback(async (route: string): Promise<void> => {
-		navigate(route, { replace: true });
-	}, [navigate]);
+	const replace = useCallback(
+		async (route: string): Promise<void> => {
+			navigate(route, { replace: true });
+		},
+		[navigate],
+	);
 
 	const reset = useCallback(async (): Promise<void> => {
 		window.location.href = window.location.origin;
@@ -40,13 +46,6 @@ export function useReactRouterAdapterImpl(): IRouterAdapter {
 			replace,
 			reset,
 		}),
-		[
-			getBaseUrl,
-			getPathname,
-			getUrlSearchParams,
-			push,
-			replace,
-			reset,
-		],
+		[getBaseUrl, getPathname, getUrlSearchParams, push, replace, reset],
 	);
 }

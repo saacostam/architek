@@ -1,21 +1,21 @@
 import type { ReactNode } from "react";
 
 export interface ICourse {
-  id: string;
-  available: boolean;
-  title: string;
-  logoUrl: string;
-  description: string;
-  chapters: IChapter[];
+	id: string;
+	available: boolean;
+	title: string;
+	logoUrl: string;
+	description: string;
+	chapters: IChapter[];
 }
 
 export interface IChapter {
-    title: string;
-    topics: ITopic[];
+	title: string;
+	topics: ITopic[];
 }
 
 export interface ITopic {
-    id: string;
-    title: string;
-    content: ReactNode;
+	id: string;
+	title: string;
+	content: ReactNode;
 }

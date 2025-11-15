@@ -1,11 +1,11 @@
 import { Suspense } from "react";
 import { Outlet, Route, Routes } from "react-router";
-import { useAdapters } from "@/shared/adapters/core/app";
-import { ErrorScreen } from "@/shared/adapters/errors/ui";
 import { CourseByIdScreen, CoursesScreen } from "@/features/courses/core/ui";
 import { AppLayout } from "@/features/layouts/ui";
-import { LazyLoadingRouteSkeleton } from "../components";
+import { useAdapters } from "@/shared/adapters/core/app";
+import { ErrorScreen } from "@/shared/adapters/errors/ui";
 import { RouteName } from "../../domain";
+import { LazyLoadingRouteSkeleton } from "../components";
 
 // Lazy imports
 // const Screen = lazy(() =>
