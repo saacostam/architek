@@ -5,7 +5,7 @@ import { Navbar } from "./navbar";
 export function AppLayout({
     children,
 }: PropsWithChildren) {
-    return <Flex direction="column" gap="4">
+    return <Flex direction="column" gap="4" style={{ backgroundColor: "var(--accent-2)", minHeight: "100vh" }}>
         <Navbar />
         <Container px="4">
             {children}

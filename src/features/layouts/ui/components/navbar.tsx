@@ -7,7 +7,7 @@ import { Link } from "react-router";
 export function Navbar() {
     const { navigationAdapter } = useAdapters();
 
-    return <div style={{ backgroundColor: "var(--accent-3)", borderBottom: "1px solid var(--accent-6)" }}>
+    return <div style={{ backgroundColor: "var(--gray-1)", borderBottom: "1px solid var(--accent-6)" }}>
         <Flex p="4">
             <Link className="clean-link" to={navigationAdapter.generateRoute({ name: RouteName.HOME })}>
                 <Logo />
