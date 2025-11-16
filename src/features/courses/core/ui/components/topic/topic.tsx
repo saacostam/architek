@@ -18,7 +18,8 @@ export function Topic({ course, topic }: TopicProps) {
 			<Flex
 				direction={{ initial: "column", xs: "row" }}
 				gap="4"
-				my="4"
+				mt="4"
+				mb="6"
 				wrap="wrap"
 			>
 				<img
