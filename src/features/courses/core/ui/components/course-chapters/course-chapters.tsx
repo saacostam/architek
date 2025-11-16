@@ -35,8 +35,8 @@ export function CourseChapters({ course }: CourseChaptersProps) {
 								key={topic.id}
 								className="clean-link"
 								to={navigationAdapter.generateRoute({
-									name: RouteName.COURSE_BY_ID,
-									payload: { id: course.id },
+									name: RouteName.TOPIC_BY_ID,
+									payload: { courseId: course.id, topicId: topic.id },
 								})}
 							>
 								<Flex align="center" direction="row" gap="2">

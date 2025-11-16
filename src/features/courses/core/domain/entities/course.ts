@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export interface ICourse {
 	id: string;
 	available: boolean;
@@ -15,7 +13,13 @@ export interface IChapter {
 }
 
 export interface ITopic {
-	id: string;
+	id: ITopicId;
 	title: string;
-	content: ReactNode;
 }
+
+export type ITopicId = "overview-of-load-balancers";
+
+export type ITopicContentMapper = Record<
+	ITopicId,
+	() => Promise<{ default: React.ComponentType }>
+>;

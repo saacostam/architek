@@ -10,7 +10,9 @@ export function AppLayout({ children }: PropsWithChildren) {
 			style={{ backgroundColor: "var(--accent-2)", minHeight: "100vh" }}
 		>
 			<Navbar />
-			<Container px="4">{children}</Container>
+			<Container px="4" mb="8">
+				{children}
+			</Container>
 		</Flex>
 	);
 }

@@ -9,6 +9,13 @@ export type GenerateRouteAction =
 			payload: {
 				id: string;
 			};
+	  }
+	| {
+			name: RouteName.TOPIC_BY_ID;
+			payload: {
+				courseId: string;
+				topicId: string;
+			};
 	  };
 
 export interface INavigationAdapter {

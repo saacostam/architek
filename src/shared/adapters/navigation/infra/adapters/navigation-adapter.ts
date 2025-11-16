@@ -13,6 +13,9 @@ export class NavigationAdapter implements INavigationAdapter {
 			case RouteName.HOME: {
 				return "/";
 			}
+			case RouteName.TOPIC_BY_ID: {
+				return "/:courseId/:topicId";
+			}
 		}
 	}
 
@@ -23,6 +26,9 @@ export class NavigationAdapter implements INavigationAdapter {
 			}
 			case RouteName.HOME: {
 				return "/";
+			}
+			case RouteName.TOPIC_BY_ID: {
+				return `/${action.payload.courseId}/${action.payload.topicId}`;
 			}
 		}
 	}

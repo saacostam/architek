@@ -9,7 +9,7 @@ export function Header(props: HeaderProps) {
 		<Heading
 			size="6"
 			{...rest}
-			style={{ ...style, color: "var(--accent-11)" }}
+			style={{ color: "var(--accent-11)", ...style }}
 		/>
 	);
 }
@@ -21,7 +21,7 @@ export function SubHeader(props: HeaderProps) {
 		<Heading
 			size="5"
 			{...rest}
-			style={{ ...style, color: "var(--accent-11)" }}
+			style={{ color: "var(--accent-11)", ...style }}
 		/>
 	);
 }

@@ -14,7 +14,6 @@ export const LOAD_BALANCER_COURSE: ICourse = {
 				{
 					id: "overview-of-load-balancers",
 					title: "Overview of Load Balancers",
-					content: null,
 				},
 			],
 		},
