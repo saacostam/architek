@@ -1,5 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import { lazy, Suspense } from "react";
+import { GenericScreenSkeleton } from "@/features/layouts/ui";
 import { Header, SubHeader } from "@/shared/components";
 import type { ICourse, ITopic } from "../../../domain";
 import { TopicContentMapper } from "../../mapping";
@@ -31,7 +32,7 @@ export function Topic({ course, topic }: TopicProps) {
 					<SubHeader style={{ color: "inherit" }}>{course.title}</SubHeader>
 				</Flex>
 			</Flex>
-			<Suspense fallback={null}>
+			<Suspense fallback={<GenericScreenSkeleton />}>
 				<Content />
 			</Suspense>
 		</>
