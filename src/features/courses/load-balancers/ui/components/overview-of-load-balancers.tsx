@@ -1,5 +1,12 @@
 import { Box, Card, Separator, Skeleton, Text } from "@radix-ui/themes";
+import { lazy, Suspense } from "react";
 import { SubHeader } from "@/shared/components";
+
+const AirportTerminalWidget = lazy(() =>
+	import("@/widgets/overview-of-load-balancers").then((m) => ({
+		default: m.OverviewOfLoadBalancersWidget,
+	})),
+);
 
 export default function OverviewOfLoadBalancers() {
 	return (
@@ -76,7 +83,9 @@ export default function OverviewOfLoadBalancers() {
 
 			<Separator size="4" my="6" />
 
-			<Skeleton width="100%" height="400px" />
+			<Suspense fallback={<Skeleton width="100%" height="400px" />}>
+				<AirportTerminalWidget />
+			</Suspense>
 
 			<Separator size="4" my="6" />
 

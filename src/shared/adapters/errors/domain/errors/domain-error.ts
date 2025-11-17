@@ -1,5 +1,6 @@
 export enum DomainErrorType {
 	BAD_REQUEST = "Bad Request",
+	CODE_ERROR = "Code Error",
 	NOT_FOUND = "Not Found",
 }
 
