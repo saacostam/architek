@@ -1,21 +1,19 @@
 import { useCallback, useMemo } from "react";
 import { useAdapters } from "@/shared/adapters/core/app";
 import { RouteName } from "@/shared/adapters/navigation/domain";
+import { useRepositories } from "@/shared/repositories/core/app";
 import type { ICourse } from "../../domain";
 
-export interface UseCoursesArgs {
-	courses: ICourse[];
-}
-
-export function useCourses({ courses: _courses }: UseCoursesArgs) {
+export function useCourses() {
+	const { coursesRepository } = useRepositories();
 	const { navigationAdapter } = useAdapters();
 
 	const courses = useMemo(() => {
-		return _courses.sort((a, b) => {
+		return coursesRepository.courses.sort((a, b) => {
 			const val = (course: ICourse) => (course.available ? 1 : 0);
 			return val(b) - val(a);
 		});
-	}, [_courses]);
+	}, [coursesRepository.courses]);
 
 	const getHrefToCourse = useCallback(
 		(course: ICourse): string => {

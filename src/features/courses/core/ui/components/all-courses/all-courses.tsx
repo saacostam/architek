@@ -2,16 +2,9 @@ import { Badge, Card, Flex, Text } from "@radix-ui/themes";
 import { Link } from "react-router";
 import { SubHeader } from "@/shared/components";
 import { useCourses } from "../../../app";
-import type { ICourse } from "../../../domain";
 
-export interface AllCoursesProps {
-	courses: ICourse[];
-}
-
-export function AllCourses({ courses: _courses }: AllCoursesProps) {
-	const { courses, getHrefToCourse } = useCourses({
-		courses: _courses,
-	});
+export function AllCourses() {
+	const { courses, getHrefToCourse } = useCourses();
 
 	return (
 		<Flex direction="column" gap="4">

@@ -1,12 +1,11 @@
 import { GenericScreenSkeleton } from "@/features/layouts/ui";
 import { useAdapters } from "@/shared/adapters/core/app";
 import { useCourses } from "../../app";
-import { COURSES } from "../../domain";
 import { Topic } from "../components";
 
 export function TopicScreen() {
 	const { routerAdapter } = useAdapters();
-	const { courses } = useCourses({ courses: COURSES });
+	const { courses } = useCourses();
 
 	const { courseId, topicId } = routerAdapter.useParams();
 	const course = courses.find((c) => c.id === courseId);

@@ -9,6 +9,7 @@ import type { IRouterAdapter } from "@/shared/adapters/router/domain";
 import { useReactRouterAdapterImpl } from "@/shared/adapters/router/infra";
 import type { IThemeAdapter } from "@/shared/adapters/theme/domain";
 import { useThemeAdapterImpl } from "@/shared/adapters/theme/infra";
+import { RepositoriesProvider } from "@/shared/repositories/core/ui";
 import { AdaptersContext } from "../app";
 import type { IAdapters } from "../domain";
 
@@ -16,7 +17,9 @@ export function AdaptersProvider() {
 	return (
 		<AdaptersWrapper>
 			<AdaptersDependencyInjectionContainer>
-				<NavigationProvider />
+				<RepositoriesProvider>
+					<NavigationProvider />
+				</RepositoriesProvider>
 			</AdaptersDependencyInjectionContainer>
 		</AdaptersWrapper>
 	);
