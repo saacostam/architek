@@ -74,7 +74,6 @@ export class EntryPoint extends Actor {
 					}),
 				);
 			}
-
 		}
 	}
 
