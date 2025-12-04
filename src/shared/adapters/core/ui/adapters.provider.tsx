@@ -1,7 +1,7 @@
 import { type PropsWithChildren, useMemo } from "react";
 import { HashRouter } from "react-router";
 import type { IErrorLoggerAdapter } from "@/shared/adapters/errors/domain";
-import { MockErrorLoggerAdapter } from "@/shared/adapters/errors/infra";
+import { useMockErrorLoggerAdapter } from "@/shared/adapters/errors/infra";
 import type { INavigationAdapter } from "@/shared/adapters/navigation/domain";
 import { NavigationAdapter } from "@/shared/adapters/navigation/infra";
 import { NavigationProvider } from "@/shared/adapters/navigation/ui";
@@ -30,10 +30,7 @@ function AdaptersWrapper({ children }: PropsWithChildren) {
 }
 
 function AdaptersDependencyInjectionContainer({ children }: PropsWithChildren) {
-	const errorLogger: IErrorLoggerAdapter = useMemo(
-		() => new MockErrorLoggerAdapter(),
-		[],
-	);
+	const errorLogger: IErrorLoggerAdapter = useMockErrorLoggerAdapter();
 	const navigationAdapter: INavigationAdapter = useMemo(
 		() => new NavigationAdapter(),
 		[],

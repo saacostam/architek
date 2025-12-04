@@ -1,1 +1,1 @@
-export * from "./mock-error-logger-adapter";
+export * from "./use-mock-error-logger-adapter";
