@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { RouteName } from "@/shared/adapters/navigation/domain";
 import { NavigationAdapter } from "@/shared/adapters/navigation/infra";
 import { renderHookWithProviders } from "@/shared/tests";
 import type { ICourse } from "../../domain";
@@ -11,65 +12,61 @@ describe("useCourses", () => {
 	it("should return available courses first", () => {
 		const SEED = [true, false, true, false, true, false];
 
-		const courses: ICourse[] = SEED.map((testCase) => {
-			return CourseMockFactory.create({
-				available: testCase,
-			});
-		});
+		const courses: ICourse[] = SEED.map((available) =>
+			CourseMockFactory.create({ available }),
+		);
 
 		const { result } = renderHookWithProviders(() => useCourses(), {
 			repositories: {
-				coursesRepository: {
-					courses: courses,
-				},
+				coursesRepository: { courses },
 			},
-			adapters: {
-				navigationAdapter,
-			},
+			adapters: { navigationAdapter },
 		});
+
+		const countTrue = SEED.filter(Boolean).length;
+		const countFalse = SEED.length - countTrue;
+		const expectedOrder = [
+			...new Array(countTrue).fill(true),
+			...new Array(countFalse).fill(false),
+		];
 
 		expect(
 			result.current.courses.map(({ available }) => available),
-		).toStrictEqual([true, true, true, false, false, false]);
+		).toStrictEqual(expectedOrder);
 	});
 
 	it("should return dummy link if course is not available", () => {
-		const unavailableCourse = CourseMockFactory.create({
-			available: false,
-		});
+		const unavailable = CourseMockFactory.create({ available: false });
 
 		const { result } = renderHookWithProviders(() => useCourses(), {
 			repositories: {
-				coursesRepository: {
-					courses: [unavailableCourse],
-				},
+				coursesRepository: { courses: [unavailable] },
 			},
-			adapters: {
-				navigationAdapter,
-			},
+			adapters: { navigationAdapter },
 		});
 
-		const href = result.current.getHrefToCourse(unavailableCourse);
+		const href = result.current.getHrefToCourse(unavailable);
+
 		expect(href).toBe("#");
 	});
 
 	it("should return course link if course is available", () => {
-		const available = CourseMockFactory.create({
-			available: true,
-		});
+		const available = CourseMockFactory.create({ available: true });
 
 		const { result } = renderHookWithProviders(() => useCourses(), {
 			repositories: {
-				coursesRepository: {
-					courses: [available],
-				},
+				coursesRepository: { courses: [available] },
 			},
-			adapters: {
-				navigationAdapter,
-			},
+			adapters: { navigationAdapter },
+		});
+
+		const expectedHref = navigationAdapter.generateRoute({
+			name: RouteName.COURSE_BY_ID,
+			payload: { id: available.id },
 		});
 
 		const href = result.current.getHrefToCourse(available);
-		expect(href).toBe(`/${available.id}`);
+
+		expect(href).toBe(expectedHref);
 	});
 });

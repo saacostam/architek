@@ -7,7 +7,7 @@ export function AllCourses() {
 	const { courses, getHrefToCourse } = useCourses();
 
 	return (
-		<Flex direction="column" gap="4">
+		<Flex direction="column" gap="4" data-testid="all-courses-container">
 			{courses.map((course) => (
 				<Link
 					className="clean-link"
