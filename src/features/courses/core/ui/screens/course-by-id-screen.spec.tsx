@@ -17,170 +17,105 @@ enum Selector {
 
 const navigationAdapter = new NavigationAdapter();
 
-describe("CourseByIdScreen", () => {
-	it("should redirect to home if id param is missing", () => {
-		const replace = vi.fn();
+function setupTest({
+	id,
+	courses = [],
+}: {
+	id: string | undefined;
+	courses?: ICourse[];
+}) {
+	const replace = vi.fn();
 
-		renderWithProviders(<CourseByIdScreen />, {
-			adapters: {
-				navigationAdapter,
-				routerAdapter: {
-					useParams: () => ({
-						id: undefined,
-					}),
-					replace,
-				},
+	renderWithProviders(<CourseByIdScreen />, {
+		adapters: {
+			navigationAdapter,
+			routerAdapter: {
+				useParams: () => ({ id }),
+				replace,
 			},
-			repositories: {
-				coursesRepository: {
-					courses: [],
-				},
-			},
-		});
-
-		screen.getByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON);
-		expect(replace).toHaveBeenCalledWith(
-			navigationAdapter.generateRoute({
-				name: RouteName.HOME,
-			}),
-		);
+		},
+		repositories: { coursesRepository: { courses } },
 	});
 
-	it("should redirect to home if id param is not a valid course id", () => {
+	return { replace };
+}
+
+function expectRedirectToHome(replace: ReturnType<typeof vi.fn>) {
+	expect(replace).toHaveBeenCalledWith(
+		navigationAdapter.generateRoute({ name: RouteName.HOME }),
+	);
+}
+
+describe("CourseByIdScreen", () => {
+	it("should redirect to home if id param is missing", () => {
+		const { replace } = setupTest({ id: undefined });
+		screen.getByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON);
+		expectRedirectToHome(replace);
+	});
+
+	it("should redirect to home if id param is invalid", () => {
 		const course = CourseMockFactory.create({ available: true });
 
-		const replace = vi.fn();
-
-		renderWithProviders(<CourseByIdScreen />, {
-			adapters: {
-				navigationAdapter,
-				routerAdapter: {
-					useParams: () => ({
-						id: `${course.id}+smt-diff`,
-					}),
-					replace,
-				},
-			},
-			repositories: {
-				coursesRepository: {
-					courses: [course],
-				},
-			},
+		const { replace } = setupTest({
+			id: `${course.id}+invalid`,
+			courses: [course],
 		});
 
 		screen.getByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON);
-		expect(replace).toHaveBeenCalledWith(
-			navigationAdapter.generateRoute({
-				name: RouteName.HOME,
-			}),
-		);
+		expectRedirectToHome(replace);
 	});
 
 	it("should redirect to home if course is not valid", () => {
 		const course = CourseMockFactory.create({ available: false });
 
-		const replace = vi.fn();
-
-		renderWithProviders(<CourseByIdScreen />, {
-			adapters: {
-				navigationAdapter,
-				routerAdapter: {
-					useParams: () => ({
-						id: course.id,
-					}),
-					replace,
-				},
-			},
-			repositories: {
-				coursesRepository: {
-					courses: [course],
-				},
-			},
+		const { replace } = setupTest({
+			id: course.id,
+			courses: [course],
 		});
 
 		screen.getByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON);
-		expect(replace).toHaveBeenCalledWith(
-			navigationAdapter.generateRoute({
-				name: RouteName.HOME,
-			}),
-		);
+		expectRedirectToHome(replace);
 	});
 
 	it("should render course information", () => {
-		const course: ICourse = {
-			id: "course-id",
-			title: "course-title",
+		const course = CourseMockFactory.create({
 			available: true,
-			logoUrl: "course-logo-url",
-			description: "course-description",
-			chapters: [
-				{
-					title: "chapter-1-title",
-					topics: [
-						{
-							id: "overview-of-load-balancers",
-							title: "Overview-of-load-balancers",
-						},
-					],
-				},
-			],
-		};
-
-		const replace = vi.fn();
-		const generateRoute = vi.spyOn(navigationAdapter, "generateRoute");
-
-		renderWithProviders(<CourseByIdScreen />, {
-			adapters: {
-				navigationAdapter,
-				routerAdapter: {
-					useParams: () => ({
-						id: course.id,
-					}),
-					replace,
-				},
-			},
-			repositories: {
-				coursesRepository: {
-					courses: [course],
-				},
+			overrides: {
+				chapters: [
+					{
+						title: "chapter-1-title",
+						topics: [
+							{
+								id: "overview-of-load-balancers",
+								title: "Overview-of-load-balancers",
+							},
+						],
+					},
+				],
 			},
 		});
 
-		// No redirect
+		const { replace } = setupTest({
+			id: course.id,
+			courses: [course],
+		});
+
+		const generateRoute = vi.spyOn(navigationAdapter, "generateRoute");
+
 		expect(
 			screen.queryByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON),
 		).toBeNull();
-		expect(replace).not.toHaveBeenCalledWith(
-			navigationAdapter.generateRoute({
-				name: RouteName.HOME,
-			}),
+		expect(replace).not.toHaveBeenCalled();
+
+		expect(screen.getByRole("img").getAttribute("src")).toBe(course.logoUrl);
+		expect(screen.getByText(course.title).textContent).toBe(course.title);
+		expect(screen.getByText(course.description).textContent).toBe(
+			course.description,
 		);
+		expect(screen.getByText("chapter-1-title")).not.toBeNull();
+		expect(screen.getByText("Overview-of-load-balancers")).not.toBeNull();
 
-		// Elements
-		const logo = screen.getByAltText(`logo-${course.title}`);
-		expect(logo).not.toBeNull();
-		expect(logo.getAttribute("src")).toBe(course.logoUrl);
-
-		const titleNode = screen.getByText(course.title);
-		expect(titleNode).not.toBeNull();
-		expect(titleNode.textContent).toBe(course.title);
-
-		const descNode = screen.getByText(course.description);
-		expect(descNode).not.toBeNull();
-		expect(descNode.textContent).toBe(course.description);
-
-		const chapterNode = screen.getByText("chapter-1-title");
-		expect(chapterNode).not.toBeNull();
-		expect(chapterNode.textContent).toBe("chapter-1-title");
-
-		const topicNode = screen.getByText("Overview-of-load-balancers");
-		expect(topicNode).not.toBeNull();
-		expect(topicNode.textContent).toBe("Overview-of-load-balancers");
-
-		// Link
-		const generateRoutePayload: Parameters<
-			INavigationAdapter["generateRoute"]
-		>[0] = {
+		const payload: Parameters<INavigationAdapter["generateRoute"]>[0] = {
 			name: RouteName.TOPIC_BY_ID,
 			payload: {
 				courseId: course.id,
@@ -191,49 +126,35 @@ describe("CourseByIdScreen", () => {
 		const link = screen.getByRole("link", {
 			name: /overview-of-load-balancers/i,
 		});
-		expect(link).not.toBeNull();
 		expect(link.getAttribute("href")).toBe(
-			navigationAdapter.generateRoute(generateRoutePayload),
+			navigationAdapter.generateRoute(payload),
 		);
-
-		expect(generateRoute).toHaveBeenCalledWith(generateRoutePayload);
+		expect(generateRoute).toHaveBeenCalledWith(payload);
 	});
 
 	it("renders correct number of chapters, topics, links, and separators", () => {
-		const course: ICourse = {
-			id: "course-id",
-			title: "course-title",
+		const course = CourseMockFactory.create({
 			available: true,
-			logoUrl: "course-logo-url",
-			description: "course-description",
-			chapters: [
-				{
-					title: "chapter-1",
-					topics: [
-						{ id: "overview-of-load-balancers", title: "Topic 1" },
-						{ id: "overview-of-load-balancers", title: "Topic 2" },
-					],
-				},
-				{
-					title: "chapter-2",
-					topics: [{ id: "overview-of-load-balancers", title: "Topic 3" }],
-				},
-			],
-		};
-
-		const replace = vi.fn();
-
-		renderWithProviders(<CourseByIdScreen />, {
-			adapters: {
-				navigationAdapter,
-				routerAdapter: {
-					useParams: () => ({ id: course.id }),
-					replace,
-				},
+			overrides: {
+				chapters: [
+					{
+						title: "chapter-1",
+						topics: [
+							{ id: "overview-of-load-balancers", title: "Topic 1" },
+							{ id: "overview-of-load-balancers", title: "Topic 2" },
+						],
+					},
+					{
+						title: "chapter-2",
+						topics: [{ id: "overview-of-load-balancers", title: "Topic 3" }],
+					},
+				],
 			},
-			repositories: {
-				coursesRepository: { courses: [course] },
-			},
+		});
+
+		setupTest({
+			id: course.id,
+			courses: [course],
 		});
 
 		expect(screen.getAllByTestId(Selector.CHAPTER_CARD).length).toBe(
@@ -244,8 +165,8 @@ describe("CourseByIdScreen", () => {
 			(acc, c) => acc + c.topics.length,
 			0,
 		);
-		expect(screen.getAllByRole("link").length).toBe(expectedTopics);
 
+		expect(screen.getAllByRole("link").length).toBe(expectedTopics);
 		expect(screen.getAllByTestId(Selector.CHAPTER_SEPARATOR).length).toBe(
 			course.chapters.length,
 		);
