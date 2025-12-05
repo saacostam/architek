@@ -13,7 +13,7 @@ enum Selectors {
 
 const navigationAdapter = new NavigationAdapter();
 
-describe("useCourses", () => {
+describe("AllCourses", () => {
 	it("should return available courses first, alphabetically, and keep unavailable order", () => {
 		const coursesSeed = [
 			{ title: "Zeta", available: true },

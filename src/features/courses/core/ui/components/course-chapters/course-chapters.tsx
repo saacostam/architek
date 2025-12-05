@@ -27,9 +27,14 @@ export function CourseChapters({ course }: CourseChaptersProps) {
 			<Text mb="2">{course.description}</Text>
 			<Flex direction="column" gap="4">
 				{course.chapters.map((chapter) => (
-					<Card key={chapter.title} size="3">
+					<Card data-testid="chapter-card" key={chapter.title} size="3">
 						<Header>{chapter.title}</Header>
-						<Separator orientation="horizontal" size="4" my="4" />
+						<Separator
+							data-testid="chapter-separator"
+							orientation="horizontal"
+							size="4"
+							my="4"
+						/>
 						{chapter.topics.map((topic) => (
 							<Link
 								key={topic.id}
