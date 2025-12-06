@@ -65,7 +65,7 @@ describe("CourseByIdScreen", () => {
 		expectRedirectToHome(replace);
 	});
 
-	it("should redirect to home if course is not valid", () => {
+	it("should redirect to home if course is not available", () => {
 		const course = CourseMockFactory.create({ available: false });
 
 		const { replace } = setupTest({
