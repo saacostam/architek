@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { RouteName } from "@/shared/adapters/navigation/domain";
 import { NavigationAdapter } from "@/shared/adapters/navigation/infra";
 import { renderWithProviders, TestIdSelector } from "@/shared/tests";
-import type { ICourse } from "../../domain";
+import type { ICourse, ITopicContentMapper } from "../../domain";
 import { topicContentMapper } from "../../infra/topic-content-mapper";
 import { CourseMockFactory } from "../../tests";
 import { TopicScreen } from "./topic-screen";
@@ -14,6 +14,7 @@ function setupTest(args: {
 	courses: ICourse[];
 	courseId?: string;
 	topicId?: string;
+	topicContentMapper?: ITopicContentMapper;
 }) {
 	const { courses, courseId, topicId } = args;
 
@@ -33,7 +34,7 @@ function setupTest(args: {
 		repositories: {
 			coursesRepository: {
 				courses,
-				topicContentMapper: topicContentMapper,
+				topicContentMapper: args.topicContentMapper ?? topicContentMapper,
 			},
 		},
 	});
@@ -147,6 +148,12 @@ describe("TopicScreen", () => {
 			courseId: course.id,
 			topicId: topic.id,
 			courses: [course],
+			topicContentMapper: {
+				"overview-of-load-balancers": () =>
+					new Promise((res) =>
+						res({ default: () => <div data-testid="lazy-loaded-content" /> }),
+					),
+			} as unknown as ITopicContentMapper,
 		});
 
 		waitFor(() => {
@@ -160,5 +167,10 @@ describe("TopicScreen", () => {
 		expect(screen.getByRole("img").getAttribute("src")).toBe(course.logoUrl);
 		expect(screen.getByText(topic.title).textContent).toBe(topic.title);
 		expect(screen.getByText(course.title).textContent).toBe(course.title);
+
+		// Lazy-loaded content
+		waitFor(() => {
+			expect(screen.getByTestId("lazy-loaded-content")).toBeDefined();
+		});
 	});
 });
