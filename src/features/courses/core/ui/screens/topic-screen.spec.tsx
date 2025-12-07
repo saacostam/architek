@@ -4,6 +4,7 @@ import { RouteName } from "@/shared/adapters/navigation/domain";
 import { NavigationAdapter } from "@/shared/adapters/navigation/infra";
 import { renderWithProviders, TestIdSelector } from "@/shared/tests";
 import type { ICourse } from "../../domain";
+import { topicContentMapper } from "../../infra/topic-content-mapper";
 import { CourseMockFactory } from "../../tests";
 import { TopicScreen } from "./topic-screen";
 
@@ -32,6 +33,7 @@ function setupTest(args: {
 		repositories: {
 			coursesRepository: {
 				courses,
+				topicContentMapper: topicContentMapper,
 			},
 		},
 	});

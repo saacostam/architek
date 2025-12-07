@@ -2,8 +2,8 @@ import { Flex } from "@radix-ui/themes";
 import { lazy, Suspense } from "react";
 import { GenericScreenSkeleton } from "@/features/layouts/ui";
 import { Header, SubHeader } from "@/shared/components";
+import { useRepositories } from "@/shared/repositories/core/app";
 import type { ICourse, ITopic } from "../../../domain";
-import { TopicContentMapper } from "../../mapping";
 
 export interface TopicProps {
 	course: ICourse;
@@ -11,7 +11,9 @@ export interface TopicProps {
 }
 
 export function Topic({ course, topic }: TopicProps) {
-	const Content = lazy(TopicContentMapper[topic.id]);
+	const { coursesRepository } = useRepositories();
+
+	const Content = lazy(coursesRepository.topicContentMapper[topic.id]);
 
 	return (
 		<>
