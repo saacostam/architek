@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { RouteName } from "@/shared/adapters/navigation/domain";
 import { NavigationAdapter } from "@/shared/adapters/navigation/infra";
@@ -129,5 +129,34 @@ describe("TopicScreen", () => {
 		});
 		screen.getByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON);
 		expectRedirectToHome(replace);
+	});
+
+	it("should show topic info", () => {
+		const course = CourseMockFactory.create({
+			available: true,
+			overrides: {
+				chapters: mockChapters,
+			},
+		});
+
+		const topic = course.chapters[0].topics[0];
+
+		const { replace } = setupTest({
+			courseId: course.id,
+			topicId: topic.id,
+			courses: [course],
+		});
+
+		waitFor(() => {
+			expect(
+				screen.queryByTestId(TestIdSelector.GENERIC_SCREEN_SKELETON),
+			).toBeNull();
+			expect(replace).not.toHaveBeenCalled();
+		});
+
+		// Metadata
+		expect(screen.getByRole("img").getAttribute("src")).toBe(course.logoUrl);
+		expect(screen.getByText(topic.title).textContent).toBe(topic.title);
+		expect(screen.getByText(course.title).textContent).toBe(course.title);
 	});
 });
