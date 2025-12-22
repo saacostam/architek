@@ -30,7 +30,7 @@ export function Navbar() {
 				<Flex align="center">
 					<Tooltip content="Toggle Theme">
 						<IconButton onClick={onSwitchTheme} variant="ghost">
-							{themeAdapter.theme === "light" ? (
+							{themeAdapter.theme === "dark" ? (
 								<SunIcon height={24} width={24} />
 							) : (
 								<MoonIcon height={24} width={24} />
